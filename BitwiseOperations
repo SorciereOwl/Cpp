@@ -1,0 +1,40 @@
+/*Написать программу, осуществляющую ввод числа типа int ,
+подсчет количества единиц, стоящих на нечетных местах в его двоичной форме,
+циклический сдвиг битов влево на N опзиций,
+вывод представления числа в двоичной форме.*/
+
+#include <iostream>
+#include <bitset>
+
+#define SIZE_INT sizeof(int) * 8
+
+/* Функция для выполнения циклического сдвига влево число `n` на `k` позиций на основе флага `isLeftShift`*/
+int circularShift(unsigned n, int k, bool isLeftShift)
+{
+	// сдвиг влево на `k`
+	if (isLeftShift) {
+		return (n << k) | (n >> (SIZE_INT - k));
+	}
+}
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+
+	int n;
+	int shift;
+
+	std::cout << "Введите число: ";
+	std::cin >> n;
+
+	std::cout << "Введите количество символов на которое нужно сдвинуть: ";
+	std::cin >> shift;
+
+	std::cout << "No Shift    " << std::bitset<32>(n) << std::endl;
+	std::cout << "Left Shift  " << std::bitset<32>(circularShift(n, shift, true)) << std::endl;
+
+	std::bitset<std::numeric_limits<int>::digits> bitset(n);
+	std::cout << "Количество единиц стоящих на нечётных местах: " << bitset.count() << std::endl;
+
+	return 0;
+}
